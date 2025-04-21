@@ -7,6 +7,17 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import BookingPage from './pages/BookingPage'
 import ProfilePage from './pages/ProfilePage'
 
+import StaffDashboardPage from './pages/StaffDashboardPage';
+// import ShipperDashboardPage from './pages/ShipperDashboardPage';
+// import CustomerDashboardPage from './pages/CustomerDashboardPage';
+import OrderManagement from './components/staff/OrderManagement';
+import ShipperAssignment from './components/staff/ShipperAssignment';
+import CustomerSupport from './components/staff/CustomerSupport';
+import StaffAnalytics from './pages/StaffAnalytics';
+
+import './App.css';
+import './styles/staffDashboard.css';
+
 function App() {
   return (
     <Router>
@@ -25,6 +36,21 @@ function App() {
             <Route path="/booking" element={<BookingPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             {/* Your routes will go here */}
+
+            <Route path="/staff" element={<StaffDashboardPage />}>
+            <Route index element={<OrderManagement />} />
+            <Route path="orders" element={<OrderManagement />} />
+            <Route path="shippers" element={<ShipperAssignment />} />
+            <Route path="support" element={<CustomerSupport />} />
+            <Route path="analytics" element={<StaffAnalytics />} />
+          </Route>
+          
+          {/* Shipper Dashboard Routes
+          <Route path="/shipper/*" element={<ShipperDashboardPage />} />
+          
+          {/* Customer Dashboard Routes */}
+          {/* <Route path="/customer/*" element={<CustomerDashboardPage />} /> */}
+        
           </Routes>
         </main>
       </div>

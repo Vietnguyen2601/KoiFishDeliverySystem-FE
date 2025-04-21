@@ -225,15 +225,80 @@ const BookingPage = () => {
       {!isConfirming ? (
         <div className="booking-form-container">
           <div className="booking-steps">
-            <div className={`step ${step >= 1 ? 'active' : ''}`}>1. Thông tin cá Koi</div>
-            <div className={`step ${step >= 2 ? 'active' : ''}`}>2. Thông tin vận chuyển</div>
-            <div className={`step ${step >= 3 ? 'active' : ''}`}>3. Dịch vụ bổ sung</div>
-            <div className={`step ${step >= 4 ? 'active' : ''}`}>4. Dịch vụ vận chuyển</div>
+            <div className={`step ${step >= 1 ? 'active' : ''}`}>1. Dịch vụ vận chuyển</div>
+            <div className={`step ${step >= 2 ? 'active' : ''}`}>2. Thông tin cá Koi</div>
+            <div className={`step ${step >= 3 ? 'active' : ''}`}>3. Thông tin vận chuyển</div>
+            <div className={`step ${step >= 4 ? 'active' : ''}`}>4. Dịch vụ bổ sung</div>
             <div className={`step ${step >= 5 ? 'active' : ''}`}>5. Thanh toán</div>
           </div>
 
           <form className="booking-form" onSubmit={handleSubmit}>
             {step === 1 && (
+              <div className="form-section">
+                <h2>Dịch vụ vận chuyển</h2>
+                
+                <div className="shipping-service-options">
+                  <div className="shipping-service-option">
+                    <input
+                      type="radio"
+                      id="local"
+                      name="shippingService"
+                      value="local"
+                      checked={formData.shipping.serviceType === 'local'}
+                      onChange={(e) => handleShippingChange('serviceType', e.target.value)}
+                    />
+                    <div className="service-details">
+                      <label htmlFor="local">Vận chuyển nội thành</label>
+                      <p>Dịch vụ vận chuyển trong phạm vi thành phố, thời gian giao hàng nhanh chóng</p>
+                      <span className="service-price">300,000₫</span>
+                    </div>
+                  </div>
+                  
+                  <div className="shipping-service-option">
+                    <input
+                      type="radio"
+                      id="suburban"
+                      name="shippingService"
+                      value="suburban"
+                      checked={formData.shipping.serviceType === 'suburban'}
+                      onChange={(e) => handleShippingChange('serviceType', e.target.value)}
+                    />
+                    <div className="service-details">
+                      <label htmlFor="suburban">Vận chuyển ngoại thành</label>
+                      <p>Dịch vụ vận chuyển đến các khu vực ngoại thành, tỉnh lân cận</p>
+                      <span className="service-price">500,000₫</span>
+                    </div>
+                  </div>
+                  
+                  <div className="shipping-service-option">
+                    <input
+                      type="radio"
+                      id="export"
+                      name="shippingService"
+                      value="export"
+                      checked={formData.shipping.serviceType === 'export'}
+                      onChange={(e) => handleShippingChange('serviceType', e.target.value)}
+                    />
+                    <div className="service-details">
+                      <label htmlFor="export">Vận chuyển xuất khẩu</label>
+                      <p>Dịch vụ vận chuyển quốc tế, đảm bảo an toàn cho cá Koi khi di chuyển đường dài</p>
+                      <span className="service-price">2,000,000₫</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="form-navigation">
+                  <button type="button" className="prev-btn" onClick={prevStep}>
+                    Quay lại
+                  </button>
+                  <button type="button" className="next-btn" onClick={nextStep}>
+                    Tiếp theo
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {step === 2 && (
               <div className="form-section">
                 <h2>Thông tin cá Koi</h2>
                 
@@ -286,7 +351,7 @@ const BookingPage = () => {
                         <input
                           type="number"
                           id={`quantity-${fish.id}`}
-                          min="1"
+                          min="0"
                           value={fish.quantity}
                           onChange={(e) => handleFishChange(fish.id, 'quantity', parseInt(e.target.value) || 1)}
                         />
@@ -297,8 +362,8 @@ const BookingPage = () => {
                         <input
                           type="number"
                           id={`weight-${fish.id}`}
-                          min="0.1"
-                          step="0.1"
+                          min="0"
+                          step="1"
                           value={fish.weight}
                           onChange={(e) => handleFishChange(fish.id, 'weight', parseFloat(e.target.value) || 0.1)}
                         />
@@ -346,7 +411,7 @@ const BookingPage = () => {
               </div>
             )}
             
-            {step === 2 && (
+            {step === 3 && (
               <div className="form-section">
                 <h2>Thông tin vận chuyển</h2>
                 
@@ -405,7 +470,7 @@ const BookingPage = () => {
               </div>
             )}
             
-            {step === 3 && (
+            {step === 4 && (
               <div className="form-section">
                 <h2>Dịch vụ bổ sung</h2>
                 
@@ -476,72 +541,7 @@ const BookingPage = () => {
                   </button>
                 </div>
               </div>
-            )}
-            
-            {step === 4 && (
-              <div className="form-section">
-                <h2>Dịch vụ vận chuyển</h2>
-                
-                <div className="shipping-service-options">
-                  <div className="shipping-service-option">
-                    <input
-                      type="radio"
-                      id="local"
-                      name="shippingService"
-                      value="local"
-                      checked={formData.shipping.serviceType === 'local'}
-                      onChange={(e) => handleShippingChange('serviceType', e.target.value)}
-                    />
-                    <div className="service-details">
-                      <label htmlFor="local">Vận chuyển nội thành</label>
-                      <p>Dịch vụ vận chuyển trong phạm vi thành phố, thời gian giao hàng nhanh chóng</p>
-                      <span className="service-price">300,000₫</span>
-                    </div>
-                  </div>
-                  
-                  <div className="shipping-service-option">
-                    <input
-                      type="radio"
-                      id="suburban"
-                      name="shippingService"
-                      value="suburban"
-                      checked={formData.shipping.serviceType === 'suburban'}
-                      onChange={(e) => handleShippingChange('serviceType', e.target.value)}
-                    />
-                    <div className="service-details">
-                      <label htmlFor="suburban">Vận chuyển ngoại thành</label>
-                      <p>Dịch vụ vận chuyển đến các khu vực ngoại thành, tỉnh lân cận</p>
-                      <span className="service-price">500,000₫</span>
-                    </div>
-                  </div>
-                  
-                  <div className="shipping-service-option">
-                    <input
-                      type="radio"
-                      id="export"
-                      name="shippingService"
-                      value="export"
-                      checked={formData.shipping.serviceType === 'export'}
-                      onChange={(e) => handleShippingChange('serviceType', e.target.value)}
-                    />
-                    <div className="service-details">
-                      <label htmlFor="export">Vận chuyển xuất khẩu</label>
-                      <p>Dịch vụ vận chuyển quốc tế, đảm bảo an toàn cho cá Koi khi di chuyển đường dài</p>
-                      <span className="service-price">2,000,000₫</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="form-navigation">
-                  <button type="button" className="prev-btn" onClick={prevStep}>
-                    Quay lại
-                  </button>
-                  <button type="button" className="next-btn" onClick={nextStep}>
-                    Tiếp theo
-                  </button>
-                </div>
-              </div>
-            )}
+            )}   
 
             {step === 5 && (
               <div className="form-section">
